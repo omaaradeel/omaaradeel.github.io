@@ -28,6 +28,7 @@
           "Liberation Mono", "Courier New", monospace;
         background: radial-gradient(circle at 20% 20%, #1f2937 0%, var(--bg) 45%);
         color: var(--text);
+        overflow: hidden;
       }
 
       .card {
@@ -37,6 +38,9 @@
         border-radius: 14px;
         overflow: hidden;
         box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        transform: translateY(24px) scale(0.985);
+        animation: cardEnter 0.9s ease-out 1.1s forwards, cardFloat 6s ease-in-out 2.2s infinite;
       }
 
       .terminal-bar {
@@ -52,6 +56,7 @@
         width: 11px;
         height: 11px;
         border-radius: 50%;
+        animation: dotPulse 2.2s ease-in-out infinite;
       }
 
       .dot.red {
@@ -64,6 +69,7 @@
 
       .dot.green {
         background: #3fb950;
+        animation-delay: 0.4s;
       }
 
       .path {
@@ -85,6 +91,7 @@
         margin: 0 0 0.7rem;
         font-size: clamp(1.5rem, 5vw, 2.4rem);
         line-height: 1.2;
+        animation: titleGlow 3.5s ease-in-out 2s infinite;
       }
 
       p {
@@ -104,9 +111,129 @@
         animation: blink 1s steps(1, end) infinite;
       }
 
+      .line-animated {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeUp 0.6s ease-out forwards;
+      }
+
+      .line-1 {
+        animation-delay: 1.25s;
+      }
+
+      .line-2 {
+        animation-delay: 1.4s;
+      }
+
+      .line-3 {
+        animation-delay: 1.55s;
+      }
+
+      .line-4 {
+        animation-delay: 1.7s;
+      }
+
+      .line-5 {
+        animation-delay: 1.85s;
+      }
+
+      .splash-screen {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(circle at 30% 20%, #1f2937 0%, #0b0f14 60%);
+        z-index: 20;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+
+      .splash-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .splash-content {
+        text-align: center;
+      }
+
+      .loader-ring {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 1rem;
+        border: 3px solid rgba(139, 148, 158, 0.35);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      .splash-title {
+        margin: 0 0 0.4rem;
+        font-size: 1.1rem;
+        letter-spacing: 0.01em;
+      }
+
+      .splash-subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
       @keyframes blink {
         50% {
           opacity: 0;
+        }
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes cardEnter {
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes cardFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+
+      @keyframes dotPulse {
+        0%,
+        100% {
+          opacity: 0.8;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.08);
+        }
+      }
+
+      @keyframes titleGlow {
+        0%,
+        100% {
+          text-shadow: 0 0 0 rgba(47, 129, 247, 0);
+        }
+        50% {
+          text-shadow: 0 0 14px rgba(47, 129, 247, 0.28);
+        }
+      }
+
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
 
@@ -118,6 +245,13 @@
     </style>
   </head>
   <body>
+    <div class="splash-screen" id="splash-screen" aria-label="Loading screen">
+      <div class="splash-content">
+        <div class="loader-ring" aria-hidden="true"></div>
+        <p class="splash-title"><span class="accent">Booting Portfolio</span></p>
+        <p class="splash-subtitle">$ initializing software engineer workspace...</p>
+      </div>
+    </div>
     <main class="card">
       <div class="terminal-bar">
         <span class="dot red"></span>
@@ -126,12 +260,19 @@
         <span class="path">omaaradeel.github.io ~ main</span>
       </div>
       <section class="content" aria-label="Coming soon message">
-        <p class="line">$ npm run launch-portfolio</p>
+        <p class="line line-animated line-1">$ npm run launch-portfolio</p>
         <h1><span class="accent">Coming Soon</span> — Building Something Great</h1>
-        <p>Engineer mode is active.</p>
-        <p>Crafting a clean, fast, and developer-focused experience.</p>
-        <p class="line">$ status: <span class="accent">in progress</span><span class="cursor"></span></p>
+        <p class="line-animated line-2">Engineer mode is active.</p>
+        <p class="line-animated line-3">Crafting a clean, fast, and developer-focused experience.</p>
+        <p class="line line-animated line-4">$ animations: <span class="accent">enabled</span></p>
+        <p class="line line-animated line-5">$ status: <span class="accent">in progress</span><span class="cursor"></span></p>
       </section>
     </main>
+    <script>
+      const splashScreen = document.getElementById("splash-screen");
+      const hideSplash = () => splashScreen.classList.add("hidden");
+      setTimeout(hideSplash, 1150);
+      window.addEventListener("load", hideSplash);
+    </script>
   </body>
 </html>
