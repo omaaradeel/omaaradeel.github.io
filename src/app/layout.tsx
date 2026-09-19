@@ -15,8 +15,42 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'Omar Adel | Cyberpunk Portfolio',
-  description: 'Software Engineer specializing in Next-Gen Architectures',
+  metadataBase: new URL('https://omar-adel.me'),
+  title: 'Omar Adel — Software Engineer',
+  description:
+    'Full Stack Software Engineer specializing in high-performance web applications, distributed systems, and next-generation digital architectures.',
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: [{ url: '/icon.png' }],
+    shortcut: ['/icon.png'],
+  },
+  openGraph: {
+    title: 'Omar Adel — Software Engineer',
+    description:
+      'Full Stack Software Engineer specializing in high-performance web applications, distributed systems, and next-generation digital architectures.',
+    url: 'https://omar-adel.me',
+    siteName: 'Omar Adel',
+    images: [
+      {
+        url: '/me-art.png',
+        width: 1140,
+        height: 1775,
+        alt: 'Omar Adel - Full Stack Software Engineer',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Omar Adel — Software Engineer',
+    description:
+      'Full Stack Software Engineer specializing in high-performance web applications, distributed systems, and next-generation digital architectures.',
+    images: ['/me-art.png'],
+  },
 };
 
 import SmoothScrollProvider from '@/components/SmoothScrollProvider';
