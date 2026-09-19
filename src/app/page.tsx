@@ -72,14 +72,14 @@ export default function Home() {
 
       {/* Hero Section - MIDDLE */}
       <motion.section 
-        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none"
+        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none px-4"
         style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}
       >
         <motion.h1 
           initial={{ y: 100, opacity: 0, filter: "blur(20px)", scale: 0.9 }}
           animate={{ y: 0, opacity: 1, filter: "blur(0px)", scale: 1 }}
           transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="font-space-grotesk text-7xl md:text-[12rem] font-bold uppercase tracking-tighter text-center z-10 leading-[0.8] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
+          className="font-space-grotesk text-5xl sm:text-7xl md:text-[12rem] font-bold uppercase tracking-tighter text-center z-10 leading-[0.8] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
         >
           OMAR ADEL
         </motion.h1>
@@ -87,7 +87,7 @@ export default function Home() {
           initial={{ y: 20, opacity: 0, letterSpacing: "0em" }}
           animate={{ y: 0, opacity: 1, letterSpacing: "0.2em" }}
           transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 text-2xl md:text-4xl font-mono text-black/80 font-bold [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]"
+          className="mt-8 text-lg sm:text-2xl md:text-4xl font-mono text-black/80 font-bold [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)] text-center"
         >
           FULL STACK ENGINEER
         </motion.p>
@@ -102,13 +102,13 @@ export default function Home() {
 
           {/* Text on right side */}
           <motion.div 
-            className="w-full md:w-1/2 h-full flex flex-col justify-center p-12 text-right items-end"
+            className="w-full md:w-1/2 h-full flex flex-col justify-center p-8 md:p-12 text-center md:text-right items-center md:items-end"
             style={{ y: section1Y, scale: section1Scale, opacity: section1Opacity }}
           >
-            <h2 className="font-space-grotesk text-6xl md:text-8xl font-bold mb-6 leading-[0.9] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]">
+            <h2 className="font-space-grotesk text-5xl sm:text-6xl md:text-8xl font-bold mb-6 leading-[0.9] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]">
               ARCHITECTING <br/> THE FUTURE
             </h2>
-            <p className="text-2xl md:text-4xl text-black/90 font-bold max-w-lg leading-tight [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]">
+            <p className="text-xl sm:text-2xl md:text-4xl text-black/90 font-bold max-w-lg leading-tight [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]">
               Building scalable, high-performance web applications and immersive digital experiences.
             </p>
           </motion.div>
