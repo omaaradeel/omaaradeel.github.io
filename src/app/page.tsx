@@ -6,7 +6,7 @@ import ScrollVideo from "@/components/ScrollVideo";
 import CustomCursor from "@/components/CustomCursor";
 import CipherText from "@/components/CipherText";
 import TechStackHUD from "@/components/TechStackHUD";
-import ExperienceStats from "@/components/ExperienceStats";
+import FloatingInfo from "@/components/FloatingInfo";
 import ScrollProgressHUD from "@/components/ScrollProgressHUD";
 import ContactSection from "@/components/ContactSection";
 
@@ -33,11 +33,6 @@ export default function Home() {
   const section2Y = useTransform(scrollYProgress, [0.32, 0.42, 0.52, 0.62], ["40%", "0%", "0%", "-30%"], { clamp: true });
   const section2Scale = useTransform(scrollYProgress, [0.32, 0.42, 0.52, 0.62], [0.88, 1, 1, 0.92], { clamp: true });
   const section2Opacity = useTransform(scrollYProgress, [0.32, 0.4, 0.5, 0.6], [0, 1, 1, 0], { clamp: true });
-
-  // Section 3: Reveal (Middle - FEATURED 3D PROJECT CARDS)
-  const section3Y = useTransform(scrollYProgress, [0.55, 0.66, 0.78, 0.88], ["40%", "0%", "0%", "-30%"], { clamp: true });
-  const section3Scale = useTransform(scrollYProgress, [0.55, 0.66, 0.78, 0.88], [0.88, 1, 1, 0.92], { clamp: true });
-  const section3Opacity = useTransform(scrollYProgress, [0.55, 0.64, 0.76, 0.86], [0, 1, 1, 0], { clamp: true });
 
   return (
     <div ref={containerRef} className="relative w-full h-[520vh] text-black bg-transparent">
@@ -153,15 +148,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Chapter 04: Section 3 - DECADE OF EXCELLENCE & EXPERIENCE */}
-      <section className="absolute top-[310vh] w-full h-[110vh] pointer-events-none">
-        <div className="sticky top-0 h-screen w-full flex items-center justify-center">
-          <motion.div
-            className="w-full"
-            style={{ y: section3Y, scale: section3Scale, opacity: section3Opacity }}
-          >
-            <ExperienceStats />
-          </motion.div>
+      {/* Chapter 04: Spatial Floating Telemetry - 10+ Years & 100+ Projects */}
+      <section className="absolute top-[300vh] w-full h-[140vh] pointer-events-none">
+        <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+          <FloatingInfo scrollYProgress={scrollYProgress} />
         </div>
       </section>
 
