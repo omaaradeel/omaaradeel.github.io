@@ -32,22 +32,24 @@ export default function Home() {
   });
 
   // Hero scale down on scroll
-  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.8]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.12], [1, 0.8], { clamp: true });
   // Fade out much faster on scroll (vanishes immediately as you scroll down)
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0], { clamp: true });
   // Also physically slide it up out of the way just to be 100% sure!
-  const heroY = useTransform(scrollYProgress, [0, 0.15], ["0vh", "-100vh"]);
+  const heroY = useTransform(scrollYProgress, [0, 0.12], ["0vh", "-100vh"], { clamp: true });
 
   // Section 1: Reveal (Right side text) with 3D feel
-  const section1Y = useTransform(scrollYProgress, [0.1, 0.4], ["100%", "0%"]);
-  const section1Scale = useTransform(scrollYProgress, [0.1, 0.4], [0.8, 1]);
-  const section1Opacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
+  const section1Y = useTransform(scrollYProgress, [0.08, 0.28, 0.38, 0.50], ["50%", "0%", "0%", "-30%"], { clamp: true });
+  const section1Scale = useTransform(scrollYProgress, [0.08, 0.28, 0.38, 0.50], [0.85, 1, 1, 0.9], { clamp: true });
+  const section1Opacity = useTransform(scrollYProgress, [0.08, 0.22, 0.36, 0.48], [0, 1, 1, 0], { clamp: true });
   
-  // Section 2: Projects (Middle)
-  const projectsY = useTransform(scrollYProgress, [0.4, 0.8], ["100vh", "0vh"]);
+  // Section 2: Reveal (Left side text) with 3D feel
+  const section2Y = useTransform(scrollYProgress, [0.42, 0.62, 0.72, 0.84], ["50%", "0%", "0%", "-30%"], { clamp: true });
+  const section2Scale = useTransform(scrollYProgress, [0.42, 0.62, 0.72, 0.84], [0.85, 1, 1, 0.9], { clamp: true });
+  const section2Opacity = useTransform(scrollYProgress, [0.42, 0.56, 0.70, 0.82], [0, 1, 1, 0], { clamp: true });
 
   return (
-    <div ref={containerRef} className="relative w-full h-[300vh] text-black bg-transparent">
+    <div ref={containerRef} className="relative w-full h-[400vh] text-black bg-transparent">
       
       <ScrollVideo />
 
@@ -93,7 +95,7 @@ export default function Home() {
         </motion.p>
       </motion.section>
 
-      {/* Sticky Split Section - RIGHT SIDE ONLY */}
+      {/* Sticky Split Section 1 - RIGHT SIDE */}
       <section className="absolute top-[100vh] w-full h-[100vh] pointer-events-none">
         <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row">
           
@@ -105,13 +107,36 @@ export default function Home() {
             className="w-full md:w-1/2 h-full flex flex-col justify-center p-8 md:p-12 text-center md:text-right items-center md:items-end"
             style={{ y: section1Y, scale: section1Scale, opacity: section1Opacity }}
           >
-            <h2 className="font-space-grotesk text-5xl sm:text-6xl md:text-8xl font-bold mb-6 leading-[0.9] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]">
+            <h2 className="font-space-grotesk text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-[0.9] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]">
               ARCHITECTING <br/> THE FUTURE
             </h2>
             <p className="text-xl sm:text-2xl md:text-4xl text-black/90 font-bold max-w-lg leading-tight [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]">
               Building scalable, high-performance web applications and immersive digital experiences.
             </p>
           </motion.div>
+
+        </div>
+      </section>
+
+      {/* Sticky Split Section 2 - LEFT SIDE */}
+      <section className="absolute top-[200vh] w-full h-[100vh] pointer-events-none">
+        <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row">
+          
+          {/* Text on left side */}
+          <motion.div 
+            className="w-full md:w-1/2 h-full flex flex-col justify-center p-8 md:p-12 text-center md:text-left items-center md:items-start"
+            style={{ y: section2Y, scale: section2Scale, opacity: section2Opacity }}
+          >
+            <h2 className="font-space-grotesk text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-[0.9] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]">
+              ENGINEERING <br/> EXCELLENCE
+            </h2>
+            <p className="text-xl sm:text-2xl md:text-4xl text-black/90 font-bold max-w-lg leading-tight [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]">
+              Crafting resilient distributed backends and reactive, modern interfaces built for global scale.
+            </p>
+          </motion.div>
+
+          {/* Empty right side to show video */}
+          <div className="hidden md:block w-full md:w-1/2 h-full"></div>
 
         </div>
       </section>
