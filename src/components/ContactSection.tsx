@@ -24,16 +24,27 @@ const DiscordIcon = () => (
 
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
+  const [discordCopied, setDiscordCopied] = useState(false);
   const email = "info@omar-adel.me";
+  const discordUsername = "hitman47.exe";
 
-  const handleCopy = async () => {
+  const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Fallback
       window.location.href = `mailto:${email}`;
+    }
+  };
+
+  const handleCopyDiscord = async () => {
+    try {
+      await navigator.clipboard.writeText(discordUsername);
+      setDiscordCopied(true);
+      setTimeout(() => setDiscordCopied(false), 2500);
+    } catch {
+      // Fallback
     }
   };
 
@@ -62,7 +73,7 @@ export default function ContactSection() {
         {/* Interactive Copy Email Pill */}
         <div className="relative mb-8">
           <button
-            onClick={handleCopy}
+            onClick={handleCopyEmail}
             data-interactive="true"
             className="group flex items-center gap-3 px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-cyan-400 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(6,182,212,0.3)]"
           >
@@ -91,37 +102,64 @@ export default function ContactSection() {
         </div>
 
         {/* Social Links */}
-        <div className="flex items-center space-x-6 sm:space-x-8 mb-10">
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-interactive="true"
-            aria-label="X Profile"
-            className="p-3 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-200"
-          >
-            <XIcon />
-          </a>
-          <a
-            href="https://github.com/omaaradeel"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-interactive="true"
-            aria-label="GitHub Profile"
-            className="p-3 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-200"
-          >
-            <GithubIcon />
-          </a>
-          <a
-            href="https://discord.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-interactive="true"
-            aria-label="Discord Profile"
-            className="p-3 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-200"
-          >
-            <DiscordIcon />
-          </a>
+        <div className="flex flex-col items-center gap-3 mb-10">
+          <div className="flex items-center space-x-6 sm:space-x-8">
+            {/* X / Twitter */}
+            <div className="relative group">
+              <a
+                href="https://x.com/HiTMaNO__o"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-interactive="true"
+                aria-label="X Profile (@HiTMaNO__o)"
+                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-cyan-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-200 block"
+              >
+                <XIcon />
+              </a>
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-black text-white text-[10px] font-mono tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border border-white/10">
+                @HiTMaNO__o
+              </div>
+            </div>
+
+            {/* GitHub */}
+            <div className="relative group">
+              <a
+                href="https://github.com/OmarAdeel"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-interactive="true"
+                aria-label="GitHub Profile (@OmarAdeel)"
+                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-cyan-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-200 block"
+              >
+                <GithubIcon />
+              </a>
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-black text-white text-[10px] font-mono tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border border-white/10">
+                @OmarAdeel
+              </div>
+            </div>
+
+            {/* Discord */}
+            <div className="relative group">
+              <button
+                onClick={handleCopyDiscord}
+                data-interactive="true"
+                aria-label="Copy Discord Username (hitman47.exe)"
+                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-cyan-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-200 cursor-pointer block"
+              >
+                <DiscordIcon />
+              </button>
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-black text-white text-[10px] font-mono tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border border-white/10">
+                {discordCopied ? "COPIED DISCORD!" : "hitman47.exe"}
+              </div>
+            </div>
+          </div>
+
+          {/* Discord Copied Confirmation Pill */}
+          {discordCopied && (
+            <span className="text-xs font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-3 py-1 rounded-full animate-fade-in">
+              Discord tag copied: hitman47.exe ✓
+            </span>
+          )}
         </div>
 
         {/* Terminal Status / Footer Meta */}
