@@ -25,10 +25,23 @@ export default function AnalyticsPage() {
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState(false);
 
-  // Load stored sessions (purges any mock data from previous sessions)
-  const refreshData = () => {
+  // Load stored sessions (fetches from /api/analytics or falls back to local)
+  const refreshData = async () => {
+    try {
+      const res = await fetch("/api/analytics?limit=200", { cache: "no-store" });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.status === "success" && Array.isArray(json.sessions)) {
+          setSessions(json.sessions);
+          setLastRefreshed(new Date());
+          return;
+        }
+      }
+    } catch {
+      // fallback to local stored sessions if server endpoint is unreachable
+    }
+
     const stored = getStoredSessions();
-    // Exclude any mock/sample sessions (e.g. starting with sess_global_ or sess_manual_)
     const realSessions = stored.filter(
       (s) => !s.id.startsWith("sess_global_") && !s.id.startsWith("sess_manual_")
     );

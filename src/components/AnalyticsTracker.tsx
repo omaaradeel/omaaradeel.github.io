@@ -131,8 +131,19 @@ export default function AnalyticsTracker() {
   return null;
 }
 
-// Optional cloud synchronizer if user enters a Supabase / webhook URL
+// Synchronize session telemetry to /api/analytics endpoint
 async function syncToCloud(session: VisitorSession) {
+  try {
+    fetch("/api/analytics", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(session),
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // ignore if offline
+  }
+
   const config = getCloudConfig();
   if (config.webhookUrl) {
     try {
@@ -141,39 +152,7 @@ async function syncToCloud(session: VisitorSession) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(session),
         mode: "no-cors",
-      }).catch(() => {});
-    } catch {
-      // ignore
-    }
-  }
-
-  if (config.supabaseUrl && config.supabaseAnonKey) {
-    try {
-      fetch(`${config.supabaseUrl}/rest/v1/visitor_sessions`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: config.supabaseAnonKey,
-          Authorization: `Bearer ${config.supabaseAnonKey}`,
-          Prefer: "resolution=merge-duplicates",
-        },
-        body: JSON.stringify({
-          id: session.id,
-          visitor_id: session.visitorId,
-          ip: session.ip,
-          city: session.city,
-          region: session.region,
-          country: session.country,
-          country_code: session.countryCode,
-          flag: session.flag,
-          isp: session.isp,
-          browser: session.browser,
-          os: session.os,
-          device_type: session.deviceType,
-          duration_seconds: session.durationSeconds,
-          visit_count: session.visitCount,
-          last_active: new Date(session.lastActive).toISOString(),
-        }),
+        keepalive: true,
       }).catch(() => {});
     } catch {
       // ignore

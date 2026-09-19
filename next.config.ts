@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // Only use static export if explicitly requested (e.g. GitHub Pages build)
+  ...(process.env.IS_STATIC_EXPORT ? { output: "export" } : {}),
   trailingSlash: true,
   images: {
     unoptimized: true,
