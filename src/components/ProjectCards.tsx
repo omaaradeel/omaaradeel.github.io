@@ -95,7 +95,7 @@ function TiltCard({ project }: { project: Project }) {
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
       data-interactive="true"
-      className="relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-black/75 backdrop-blur-xl border border-white/10 hover:border-cyan-500/50 shadow-2xl transition-colors duration-300 text-left overflow-hidden group min-h-[360px]"
+      className="relative flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-black/75 backdrop-blur-xl border border-white/10 hover:border-red-500/50 shadow-2xl transition-colors duration-300 text-left overflow-hidden group min-h-[360px]"
     >
       {/* Dynamic Cursor Spotlight Glare */}
       {isHovered && (
@@ -110,15 +110,15 @@ function TiltCard({ project }: { project: Project }) {
       {/* Card Header */}
       <div className="relative z-10">
         <div className="flex justify-between items-center mb-4">
-          <span className="font-mono text-xs tracking-widest text-cyan-400 font-semibold">
+          <span className="font-mono text-xs tracking-widest text-red-400 font-semibold">
             {project.tag}
           </span>
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-red-500/10 text-red-300 border border-red-500/20">
             {project.metrics}
           </span>
         </div>
 
-        <h3 className="font-space-grotesk text-2xl sm:text-3xl font-bold text-white mb-1 tracking-tight group-hover:text-cyan-300 transition-colors">
+        <h3 className="font-space-grotesk text-2xl sm:text-3xl font-bold text-white mb-1 tracking-tight group-hover:text-red-300 transition-colors">
           {project.title}
         </h3>
         <p className="font-mono text-xs text-white/60 mb-3 tracking-wide">
@@ -147,7 +147,7 @@ function TiltCard({ project }: { project: Project }) {
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors pointer-events-auto"
+            className="font-mono text-xs text-red-400 hover:text-red-300 flex items-center gap-1.5 transition-colors pointer-events-auto"
           >
             <span>VIEW REPOSITORY</span>
             <svg

@@ -61,7 +61,7 @@ export default function ScrollProgressHUD() {
             <span
               className={`font-mono text-[10px] tracking-widest transition-all duration-200 ${
                 isActive
-                  ? "opacity-100 font-bold text-cyan-400 translate-x-0"
+                  ? "opacity-100 font-bold text-red-500 translate-x-0"
                   : "opacity-0 group-hover:opacity-100 text-white/70 translate-x-2 group-hover:translate-x-0"
               }`}
             >
@@ -73,12 +73,12 @@ export default function ScrollProgressHUD() {
               <span
                 className={`transition-all duration-300 rounded-full ${
                   isActive
-                    ? "w-2.5 h-2.5 bg-cyan-400 shadow-[0_0_12px_#22d3ee]"
+                    ? "w-2.5 h-2.5 bg-red-500 shadow-[0_0_12px_#ef4444]"
                     : "w-1.5 h-1.5 bg-white/40 group-hover:bg-white group-hover:scale-125"
                 }`}
               />
               {isActive && (
-                <span className="absolute inset-0 rounded-full border border-cyan-400 animate-ping opacity-50" />
+                <span className="absolute inset-0 rounded-full border border-red-500 animate-ping opacity-50" />
               )}
             </div>
           </button>

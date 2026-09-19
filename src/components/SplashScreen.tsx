@@ -102,7 +102,7 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
           {/* Bottom Bar Telemetry */}
           <div className="flex justify-between items-center font-mono text-[11px] text-neutral-400 tracking-wider">
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444]" />
               <span className="text-neutral-300">CORE_ENGINE: ONLINE</span>
             </div>
             <div className="text-neutral-400">

@@ -63,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${outfit.variable} ${spaceGrotesk.variable} font-sans bg-[#030712] text-slate-100 antialiased overflow-x-hidden selection:bg-cyan-500/30`}
+        className={`${outfit.variable} ${spaceGrotesk.variable} font-sans bg-[#030712] text-slate-100 antialiased overflow-x-hidden selection:bg-red-500/30 selection:text-white`}
       >
         <SmoothScrollProvider>
           <main className="relative z-10 flex min-h-screen flex-col items-center">

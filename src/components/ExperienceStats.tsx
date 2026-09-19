@@ -77,11 +77,11 @@ export default function ExperienceStats() {
             transition={{ duration: 0.5, delay: index * 0.1 }}
             whileHover={{ y: -4, scale: 1.02 }}
             data-interactive="true"
-            className="relative p-6 rounded-2xl bg-black/80 backdrop-blur-xl border border-white/10 hover:border-cyan-500/60 shadow-2xl transition-all duration-300 group overflow-hidden flex flex-col justify-between"
+            className="relative p-6 rounded-2xl bg-black/80 backdrop-blur-xl border border-white/10 hover:border-red-500/60 shadow-2xl transition-all duration-300 group overflow-hidden flex flex-col justify-between"
           >
             {/* Top Tag */}
             <div className="flex justify-between items-center mb-4">
-              <span className="font-mono text-[10px] text-cyan-400 font-semibold tracking-wider">
+              <span className="font-mono text-[10px] text-red-400 font-semibold tracking-wider">
                 {stat.highlight}
               </span>
               <span className="font-mono text-[10px] text-white/40">#{stat.id}</span>
@@ -89,10 +89,10 @@ export default function ExperienceStats() {
 
             {/* Main Metric */}
             <div>
-              <div className="font-space-grotesk text-5xl sm:text-6xl font-bold text-white tracking-tight group-hover:text-cyan-300 transition-colors drop-shadow-md">
+              <div className="font-space-grotesk text-5xl sm:text-6xl font-bold text-white tracking-tight group-hover:text-red-300 transition-colors drop-shadow-md">
                 {stat.value}
               </div>
-              <div className="font-mono text-xs sm:text-sm font-bold text-cyan-400 tracking-wider mt-1 mb-3 uppercase">
+              <div className="font-mono text-xs sm:text-sm font-bold text-red-400 tracking-wider mt-1 mb-3 uppercase">
                 {stat.label}
               </div>
               <p className="text-xs text-white/70 leading-relaxed font-sans">
@@ -102,7 +102,7 @@ export default function ExperienceStats() {
 
             {/* Subtle bottom glow indicator */}
             <div className="mt-4 pt-3 border-t border-white/5 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 group-hover:shadow-[0_0_8px_#22d3ee] transition-shadow" />
+              <span className="w-1.5 h-1.5 rounded-full bg-red-400 group-hover:shadow-[0_0_8px_#22d3ee] transition-shadow" />
               <span className="font-mono text-[10px] text-white/50 tracking-wider">VERIFIED MILESTONE</span>
             </div>
           </motion.div>
@@ -111,14 +111,14 @@ export default function ExperienceStats() {
 
       {/* Capabilities Ticker / Pills Strip */}
       <div className="p-4 sm:p-5 rounded-xl bg-black/60 backdrop-blur-lg border border-white/10 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-        <span className="font-mono text-xs text-cyan-400 font-semibold tracking-wider uppercase mr-2 flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+        <span className="font-mono text-xs text-red-400 font-semibold tracking-wider uppercase mr-2 flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
           KEY COMPETENCIES:
         </span>
         {CAPABILITIES.map((cap) => (
           <span
             key={cap}
-            className="px-3 py-1 rounded-lg text-xs font-mono bg-white/5 hover:bg-white/10 text-white/80 border border-white/10 hover:border-cyan-400/50 transition-colors"
+            className="px-3 py-1 rounded-lg text-xs font-mono bg-white/5 hover:bg-white/10 text-white/80 border border-white/10 hover:border-red-400/50 transition-colors"
           >
             {cap}
           </span>

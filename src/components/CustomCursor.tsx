@@ -74,7 +74,7 @@ export default function CustomCursor() {
     <>
       {/* Tiny Sharp Center Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-cyan-400 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-red-500 pointer-events-none z-[9999] mix-blend-difference"
         style={{
           x: cursorX,
           y: cursorY,
@@ -93,10 +93,10 @@ export default function CustomCursor() {
           translateY: "-50%",
           width: isHovered ? 48 : 28,
           height: isHovered ? 48 : 28,
-          borderColor: isHovered ? "rgba(6, 182, 212, 0.9)" : "rgba(6, 182, 212, 0.4)",
-          backgroundColor: isHovered ? "rgba(6, 182, 212, 0.12)" : "rgba(6, 182, 212, 0.02)",
+          borderColor: isHovered ? "rgba(239, 68, 68, 0.9)" : "rgba(239, 68, 68, 0.4)",
+          backgroundColor: isHovered ? "rgba(239, 68, 68, 0.12)" : "rgba(239, 68, 68, 0.02)",
           boxShadow: isHovered
-            ? "0 0 20px rgba(6, 182, 212, 0.4), inset 0 0 10px rgba(6, 182, 212, 0.2)"
+            ? "0 0 20px rgba(239, 68, 68, 0.4), inset 0 0 10px rgba(239, 68, 68, 0.2)"
             : "none",
         }}
       />

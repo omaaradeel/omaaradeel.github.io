@@ -25,7 +25,7 @@ export default function TechStackHUD() {
   return (
     <div className="mt-8 w-full max-w-xl pointer-events-auto">
       <div className="flex items-center gap-2 mb-3 font-mono text-xs uppercase tracking-widest text-black/70">
-        <span className="inline-block w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+        <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse" />
         <span>/// CORE_STACK & TECHNOLOGIES</span>
       </div>
 
@@ -38,11 +38,11 @@ export default function TechStackHUD() {
             transition={{ duration: 0.5, delay: index * 0.05 }}
             whileHover={{ y: -3, scale: 1.04 }}
             data-interactive="true"
-            className="group relative px-3 py-1.5 rounded-lg bg-black/5 hover:bg-black/10 backdrop-blur-md border border-black/20 hover:border-cyan-600 transition-all duration-200 cursor-pointer shadow-sm hover:shadow-[0_0_16px_rgba(6,182,212,0.3)]"
+            className="group relative px-3 py-1.5 rounded-lg bg-black/5 hover:bg-black/10 backdrop-blur-md border border-black/20 hover:border-red-500 transition-all duration-200 cursor-pointer shadow-sm hover:shadow-[0_0_16px_rgba(239,68,68,0.35)]"
           >
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-black/40 group-hover:bg-cyan-600 group-hover:shadow-[0_0_6px_#06b6d4] transition-colors" />
-              <span className="font-space-grotesk text-xs sm:text-sm font-bold text-black tracking-tight group-hover:text-cyan-800 transition-colors">
+              <span className="w-1.5 h-1.5 rounded-full bg-black/40 group-hover:bg-red-500 group-hover:shadow-[0_0_6px_#ef4444] transition-colors" />
+              <span className="font-space-grotesk text-xs sm:text-sm font-bold text-black tracking-tight group-hover:text-red-600 transition-colors">
                 {item.name}
               </span>
             </div>

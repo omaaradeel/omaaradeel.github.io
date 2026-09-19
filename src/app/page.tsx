@@ -24,6 +24,8 @@ export default function Home() {
   const heroOpacity = useTransform(scrollYProgress, [0.04, 0.18], [1, 0], { clamp: true });
   // Gently glide up out of view
   const heroY = useTransform(scrollYProgress, [0, 0.2], ["0vh", "-40vh"], { clamp: true });
+  // Ensure hero is completely unmounted/hidden from display once past Chapter 01
+  const heroDisplay = useTransform(scrollYProgress, (v) => (v > 0.2 ? "none" : "flex"));
 
   // Section 1: Reveal (Right side text - ARCHITECTURE)
   const section1Y = useTransform(scrollYProgress, [0.08, 0.2, 0.3, 0.4], ["40%", "0%", "0%", "-30%"], { clamp: true });
@@ -78,28 +80,32 @@ export default function Home() {
         </motion.div>
       </nav>
 
-      {/* Chapter 01: Hero Section - MIDDLE */}
-      <motion.section
-        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none px-4"
-        style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}
-      >
-        <motion.h1
-          initial={{ y: 80, opacity: 0, filter: "blur(16px)", scale: 0.92 }}
-          animate={{ y: 0, opacity: 1, filter: "blur(0px)", scale: 1 }}
-          transition={{ duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
-          className="font-space-grotesk text-5xl sm:text-7xl md:text-[12rem] font-bold uppercase tracking-tighter text-center z-10 leading-[0.8] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
-        >
-          <CipherText text="OMAR ADEL" speed={55} revealSpeed={0.16} />
-        </motion.h1>
-        <motion.p
-          initial={{ y: 25, opacity: 0, letterSpacing: "0em" }}
-          animate={{ y: 0, opacity: 1, letterSpacing: "0.2em" }}
-          transition={{ duration: 2.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 text-lg sm:text-2xl md:text-4xl font-mono text-black/80 font-bold [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)] text-center"
-        >
-          FULL STACK ENGINEER
-        </motion.p>
-      </motion.section>
+      {/* Chapter 01: Hero Section - Confined strictly to 0-120vh so it can never reappear at the end */}
+      <section className="absolute top-0 w-full h-[120vh] pointer-events-none">
+        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4">
+          <motion.div
+            className="flex flex-col items-center justify-center"
+            style={{ scale: heroScale, y: heroY, opacity: heroOpacity, display: heroDisplay }}
+          >
+            <motion.h1
+              initial={{ y: 80, opacity: 0, filter: "blur(16px)", scale: 0.92 }}
+              animate={{ y: 0, opacity: 1, filter: "blur(0px)", scale: 1 }}
+              transition={{ duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
+              className="font-space-grotesk text-5xl sm:text-7xl md:text-[12rem] font-bold uppercase tracking-tighter text-center z-10 leading-[0.8] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
+            >
+              <CipherText text="OMAR ADEL" speed={55} revealSpeed={0.16} />
+            </motion.h1>
+            <motion.p
+              initial={{ y: 25, opacity: 0, letterSpacing: "0em" }}
+              animate={{ y: 0, opacity: 1, letterSpacing: "0.2em" }}
+              transition={{ duration: 2.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-8 text-lg sm:text-2xl md:text-4xl font-mono text-black/80 font-bold [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)] text-center"
+            >
+              FULL STACK ENGINEER
+            </motion.p>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Chapter 02: Sticky Split Section 1 - RIGHT SIDE (ARCHITECTURE) */}
       <section className="absolute top-[100vh] w-full h-[100vh] pointer-events-none">

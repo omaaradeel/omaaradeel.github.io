@@ -75,12 +75,12 @@ export default function ContactSection() {
           <button
             onClick={handleCopyEmail}
             data-interactive="true"
-            className="group flex items-center gap-3 px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-cyan-400 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(6,182,212,0.3)]"
+            className="group flex items-center gap-3 px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-red-500 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(239,68,68,0.4)]"
           >
-            <span className="font-mono text-base sm:text-xl text-white group-hover:text-cyan-300 transition-colors">
+            <span className="font-mono text-base sm:text-xl text-white group-hover:text-red-400 transition-colors">
               {email}
             </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/10 group-hover:bg-cyan-500/20 text-xs font-mono text-white/80 group-hover:text-cyan-300 transition-colors">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/10 group-hover:bg-red-500/20 text-xs font-mono text-white/80 group-hover:text-red-400 transition-colors">
               {copied ? (
                 <>
                   <svg className="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -112,7 +112,7 @@ export default function ContactSection() {
                 rel="noopener noreferrer"
                 data-interactive="true"
                 aria-label="X Profile (@HiTMaNO__o)"
-                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-cyan-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-200 block"
+                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-red-400 hover:shadow-[0_0_20px_rgba(239,68,68,0.5)] transition-all duration-200 block"
               >
                 <XIcon />
               </a>
@@ -129,7 +129,7 @@ export default function ContactSection() {
                 rel="noopener noreferrer"
                 data-interactive="true"
                 aria-label="GitHub Profile (@OmarAdeel)"
-                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-cyan-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-200 block"
+                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-red-400 hover:shadow-[0_0_20px_rgba(239,68,68,0.5)] transition-all duration-200 block"
               >
                 <GithubIcon />
               </a>
@@ -144,7 +144,7 @@ export default function ContactSection() {
                 onClick={handleCopyDiscord}
                 data-interactive="true"
                 aria-label="Copy Discord Username (hitman47.exe)"
-                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-cyan-300 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-200 cursor-pointer block"
+                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-red-400 hover:shadow-[0_0_20px_rgba(239,68,68,0.5)] transition-all duration-200 cursor-pointer block"
               >
                 <DiscordIcon />
               </button>
@@ -156,7 +156,7 @@ export default function ContactSection() {
 
           {/* Discord Copied Confirmation Pill */}
           {discordCopied && (
-            <span className="text-xs font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-3 py-1 rounded-full animate-fade-in">
+            <span className="text-xs font-mono text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full animate-fade-in">
               Discord tag copied: hitman47.exe ✓
             </span>
           )}
@@ -165,7 +165,7 @@ export default function ContactSection() {
         {/* Terminal Status / Footer Meta */}
         <div className="w-full pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-white/40">
           <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444]" />
             <span>SYSTEM STATUS: OPERATIONAL</span>
           </div>
           <div>
