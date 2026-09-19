@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, useTransform } from "framer-motion";
 
 export default function ScrollVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -33,11 +33,14 @@ export default function ScrollVideo() {
     }
   });
 
+  const videoBlur = useTransform(scrollYProgress, [0, 0.05], ["blur(20px)", "blur(0px)"]);
+
   return (
     <div className="fixed inset-0 w-full h-full z-[-1] pointer-events-none overflow-hidden bg-black">
-      <video
+      <motion.video
         ref={videoRef}
         src="/omar-scroll-video.mp4"
+        style={{ filter: videoBlur }}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover scale-[1.01] md:scale-[1.15]"
         muted
         playsInline
