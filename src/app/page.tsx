@@ -9,6 +9,7 @@ import TechStackHUD from "@/components/TechStackHUD";
 import FloatingInfo from "@/components/FloatingInfo";
 import ScrollProgressHUD from "@/components/ScrollProgressHUD";
 import ContactSection from "@/components/ContactSection";
+import SplashScreen from "@/components/SplashScreen";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,6 +37,9 @@ export default function Home() {
 
   return (
     <div ref={containerRef} className="relative w-full h-[520vh] text-black bg-transparent">
+      {/* Dark Splash Loading Screen (Zero Blue Colors) */}
+      <SplashScreen />
+
       {/* Interactive Custom Cursor */}
       <CustomCursor />
 
