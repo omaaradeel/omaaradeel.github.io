@@ -6,7 +6,7 @@ import ScrollVideo from "@/components/ScrollVideo";
 import CustomCursor from "@/components/CustomCursor";
 import CipherText from "@/components/CipherText";
 import TechStackHUD from "@/components/TechStackHUD";
-import ProjectCards from "@/components/ProjectCards";
+import ExperienceStats from "@/components/ExperienceStats";
 import ScrollProgressHUD from "@/components/ScrollProgressHUD";
 import ContactSection from "@/components/ContactSection";
 
@@ -153,14 +153,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Chapter 04: Section 3 - 3D PROJECT SHOWCASE */}
+      {/* Chapter 04: Section 3 - DECADE OF EXCELLENCE & EXPERIENCE */}
       <section className="absolute top-[310vh] w-full h-[110vh] pointer-events-none">
         <div className="sticky top-0 h-screen w-full flex items-center justify-center">
           <motion.div
             className="w-full"
             style={{ y: section3Y, scale: section3Scale, opacity: section3Opacity }}
           >
-            <ProjectCards />
+            <ExperienceStats />
           </motion.div>
         </div>
       </section>

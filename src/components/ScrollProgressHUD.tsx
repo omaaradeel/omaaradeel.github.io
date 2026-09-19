@@ -13,7 +13,7 @@ const CHAPTERS: Chapter[] = [
   { id: "01", label: "ORIGIN", progress: 0.0 },
   { id: "02", label: "VISION", progress: 0.25 },
   { id: "03", label: "STACK", progress: 0.50 },
-  { id: "04", label: "WORKS", progress: 0.75 },
+  { id: "04", label: "IMPACT", progress: 0.75 },
   { id: "05", label: "CONTACT", progress: 1.0 },
 ];
 
