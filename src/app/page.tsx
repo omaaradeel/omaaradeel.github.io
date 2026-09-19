@@ -68,7 +68,16 @@ export default function Home() {
           transition={{ duration: 1, delay: 0.6 }}
           className="font-mono text-xs uppercase tracking-widest text-right"
         >
-          Software<br/>Engineer
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{
+              duration: 1.6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            Software<br/>Engineer
+          </motion.div>
         </motion.div>
       </nav>
 
