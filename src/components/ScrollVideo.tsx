@@ -40,7 +40,7 @@ export default function ScrollVideo() {
     <div className="fixed inset-0 w-full h-full z-[-1] pointer-events-none overflow-hidden bg-black">
       <motion.video
         ref={videoRef}
-        src="/omar-scroll-video.mp4"
+        src="/Dark-Video.mp4"
         style={{ filter: videoBlur }}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover scale-[1.01] md:scale-[1.15]"
         muted

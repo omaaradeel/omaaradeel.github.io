@@ -174,10 +174,10 @@ export default function ProjectCards() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 pointer-events-auto perspective-1000">
       <div className="text-center mb-8 sm:mb-12">
-        <span className="font-mono text-xs uppercase tracking-widest text-black/70 mb-2 block">
+        <span className="font-mono text-xs uppercase tracking-widest text-white/70 mb-2 block">
           /// SELECTED WORKS & ARCHITECTURE
         </span>
-        <h2 className="font-space-grotesk text-4xl sm:text-6xl font-bold tracking-tight text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]">
+        <h2 className="font-space-grotesk text-4xl sm:text-6xl font-bold tracking-tight text-white [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]">
           FEATURED PROJECTS
         </h2>
       </div>
