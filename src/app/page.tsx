@@ -17,12 +17,12 @@ export default function Home() {
     offset: ["start start", "end end"],
   });
 
-  // Hero scale down on scroll
-  const heroScale = useTransform(scrollYProgress, [0, 0.1], [1, 0.85], { clamp: true });
-  // Fade out fast on scroll
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0], { clamp: true });
-  // Physically slide it up out of the way
-  const heroY = useTransform(scrollYProgress, [0, 0.1], ["0vh", "-100vh"], { clamp: true });
+  // Hero scale down on scroll (slowed down and smoothed)
+  const heroScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.85], { clamp: true });
+  // Fade out much slower on scroll so the name lingers gracefully
+  const heroOpacity = useTransform(scrollYProgress, [0.04, 0.18], [1, 0], { clamp: true });
+  // Gently glide up out of view
+  const heroY = useTransform(scrollYProgress, [0, 0.2], ["0vh", "-40vh"], { clamp: true });
 
   // Section 1: Reveal (Right side text - ARCHITECTURE)
   const section1Y = useTransform(scrollYProgress, [0.08, 0.2, 0.3, 0.4], ["40%", "0%", "0%", "-30%"], { clamp: true });
@@ -80,17 +80,17 @@ export default function Home() {
         style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}
       >
         <motion.h1
-          initial={{ y: 100, opacity: 0, filter: "blur(20px)", scale: 0.9 }}
+          initial={{ y: 80, opacity: 0, filter: "blur(16px)", scale: 0.92 }}
           animate={{ y: 0, opacity: 1, filter: "blur(0px)", scale: 1 }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
           className="font-space-grotesk text-5xl sm:text-7xl md:text-[12rem] font-bold uppercase tracking-tighter text-center z-10 leading-[0.8] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
         >
-          <CipherText text="OMAR ADEL" />
+          <CipherText text="OMAR ADEL" speed={55} revealSpeed={0.16} />
         </motion.h1>
         <motion.p
-          initial={{ y: 20, opacity: 0, letterSpacing: "0em" }}
+          initial={{ y: 25, opacity: 0, letterSpacing: "0em" }}
           animate={{ y: 0, opacity: 1, letterSpacing: "0.2em" }}
-          transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 2.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 text-lg sm:text-2xl md:text-4xl font-mono text-black/80 font-bold [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)] text-center"
         >
           FULL STACK ENGINEER

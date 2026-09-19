@@ -6,6 +6,8 @@ interface CipherTextProps {
   text: string;
   className?: string;
   triggerOnMount?: boolean;
+  speed?: number;
+  revealSpeed?: number;
 }
 
 const GLYPHS = "01!@#$%^&*<>~+=Δ✦_XYZ01";
@@ -14,6 +16,8 @@ export default function CipherText({
   text,
   className = "",
   triggerOnMount = true,
+  speed = 45,
+  revealSpeed = 0.25,
 }: CipherTextProps) {
   const [display, setDisplay] = useState(text);
   const isScramblingRef = useRef(false);
@@ -48,9 +52,9 @@ export default function CipherText({
         setDisplay(text);
       }
 
-      iteration += 1 / 2;
-    }, 30);
-  }, [text]);
+      iteration += revealSpeed;
+    }, speed);
+  }, [text, speed, revealSpeed]);
 
   useEffect(() => {
     if (triggerOnMount) {
