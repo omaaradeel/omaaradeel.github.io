@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CipherText from "@/components/CipherText";
+import { useTheme } from "@/context/ThemeContext";
 
 const GithubIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -23,6 +24,7 @@ const DiscordIcon = () => (
 );
 
 export default function ContactSection() {
+  const { isDark } = useTheme();
   const [copied, setCopied] = useState(false);
   const [discordCopied, setDiscordCopied] = useState(false);
   const email = "info@omar-adel.me";
@@ -49,11 +51,17 @@ export default function ContactSection() {
   };
 
   return (
-    <footer className="w-full bg-black/90 backdrop-blur-2xl border-t border-white/10 flex flex-col items-center justify-center p-8 sm:p-14 text-white pointer-events-auto">
+    <footer
+      className={`w-full backdrop-blur-2xl border-t flex flex-col items-center justify-center p-8 sm:p-14 pointer-events-auto transition-colors duration-500 ${
+        isDark
+          ? "bg-black/90 border-white/10 text-white"
+          : "bg-white/90 border-black/10 text-black shadow-[0_-10px_30px_rgba(0,0,0,0.05)]"
+      }`}
+    >
       <div className="w-full max-w-4xl flex flex-col items-center text-center">
         
         {/* Availability Beacon */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs tracking-wider mb-6">
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 font-mono text-xs tracking-wider mb-6">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -66,7 +74,7 @@ export default function ContactSection() {
           <CipherText text="INIT_CONTACT" />
         </h2>
 
-        <p className="font-sans text-sm sm:text-base text-white/70 max-w-md mb-8">
+        <p className={`font-sans text-sm sm:text-base max-w-md mb-8 transition-colors ${isDark ? "text-white/70" : "text-black/70"}`}>
           Have an ambitious product, high-scale system, or next-generation web experience in mind? Let’s connect.
         </p>
 
@@ -75,18 +83,32 @@ export default function ContactSection() {
           <button
             onClick={handleCopyEmail}
             data-interactive="true"
-            className="group flex items-center gap-3 px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-red-500 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(239,68,68,0.4)]"
+            className={`group flex items-center gap-3 px-6 py-3 rounded-xl backdrop-blur-xl border transition-all duration-300 cursor-pointer shadow-lg hover:shadow-[0_0_25px_rgba(239,68,68,0.4)] ${
+              isDark
+                ? "bg-white/5 hover:bg-white/10 border-white/15 hover:border-red-500"
+                : "bg-black/5 hover:bg-black/10 border-black/15 hover:border-red-500"
+            }`}
           >
-            <span className="font-mono text-base sm:text-xl text-white group-hover:text-red-400 transition-colors">
+            <span
+              className={`font-mono text-base sm:text-xl group-hover:text-red-500 transition-colors ${
+                isDark ? "text-white" : "text-black"
+              }`}
+            >
               {email}
             </span>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/10 group-hover:bg-red-500/20 text-xs font-mono text-white/80 group-hover:text-red-400 transition-colors">
+            <div
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono transition-colors ${
+                isDark
+                  ? "bg-white/10 group-hover:bg-red-500/20 text-white/80 group-hover:text-red-400"
+                  : "bg-black/10 group-hover:bg-red-500/20 text-black/80 group-hover:text-red-600"
+              }`}
+            >
               {copied ? (
                 <>
-                  <svg className="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-3.5 h-3.5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                  <span className="text-emerald-400 font-bold">COPIED!</span>
+                  <span className="text-emerald-500 font-bold">COPIED!</span>
                 </>
               ) : (
                 <>
@@ -112,11 +134,19 @@ export default function ContactSection() {
                 rel="noopener noreferrer"
                 data-interactive="true"
                 aria-label="X Profile (@HiTMaNO__o)"
-                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-red-400 hover:shadow-[0_0_20px_rgba(239,68,68,0.5)] transition-all duration-200 block"
+                className={`p-3.5 rounded-full hover:text-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all duration-200 block ${
+                  isDark
+                    ? "bg-white/5 hover:bg-white/15 text-white/80"
+                    : "bg-black/5 hover:bg-black/15 text-black/80"
+                }`}
               >
                 <XIcon />
               </a>
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-black text-white text-[10px] font-mono tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border border-white/10">
+              <div
+                className={`absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] font-mono tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border ${
+                  isDark ? "bg-black text-white border-white/10" : "bg-white text-black border-black/10"
+                }`}
+              >
                 @HiTMaNO__o
               </div>
             </div>
@@ -129,11 +159,19 @@ export default function ContactSection() {
                 rel="noopener noreferrer"
                 data-interactive="true"
                 aria-label="GitHub Profile (@OmarAdeel)"
-                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-red-400 hover:shadow-[0_0_20px_rgba(239,68,68,0.5)] transition-all duration-200 block"
+                className={`p-3.5 rounded-full hover:text-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all duration-200 block ${
+                  isDark
+                    ? "bg-white/5 hover:bg-white/15 text-white/80"
+                    : "bg-black/5 hover:bg-black/15 text-black/80"
+                }`}
               >
                 <GithubIcon />
               </a>
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-black text-white text-[10px] font-mono tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border border-white/10">
+              <div
+                className={`absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] font-mono tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border ${
+                  isDark ? "bg-black text-white border-white/10" : "bg-white text-black border-black/10"
+                }`}
+              >
                 @OmarAdeel
               </div>
             </div>
@@ -144,11 +182,19 @@ export default function ContactSection() {
                 onClick={handleCopyDiscord}
                 data-interactive="true"
                 aria-label="Copy Discord Username (hitman47.exe)"
-                className="p-3.5 rounded-full bg-white/5 hover:bg-white/15 text-white/80 hover:text-red-400 hover:shadow-[0_0_20px_rgba(239,68,68,0.5)] transition-all duration-200 cursor-pointer block"
+                className={`p-3.5 rounded-full hover:text-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all duration-200 cursor-pointer block ${
+                  isDark
+                    ? "bg-white/5 hover:bg-white/15 text-white/80"
+                    : "bg-black/5 hover:bg-black/15 text-black/80"
+                }`}
               >
                 <DiscordIcon />
               </button>
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-black text-white text-[10px] font-mono tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border border-white/10">
+              <div
+                className={`absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] font-mono tracking-wider opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg border ${
+                  isDark ? "bg-black text-white border-white/10" : "bg-white text-black border-black/10"
+                }`}
+              >
                 {discordCopied ? "COPIED DISCORD!" : "hitman47.exe"}
               </div>
             </div>
@@ -156,14 +202,18 @@ export default function ContactSection() {
 
           {/* Discord Copied Confirmation Pill */}
           {discordCopied && (
-            <span className="text-xs font-mono text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full animate-fade-in">
+            <span className="text-xs font-mono text-red-500 bg-red-500/10 border border-red-500/30 px-3 py-1 rounded-full animate-fade-in">
               Discord tag copied: hitman47.exe ✓
             </span>
           )}
         </div>
 
         {/* Terminal Status / Footer Meta */}
-        <div className="w-full pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-white/40">
+        <div
+          className={`w-full pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] transition-colors ${
+            isDark ? "border-white/10 text-white/40" : "border-black/10 text-black/50"
+          }`}
+        >
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444]" />
             <span>SYSTEM STATUS: OPERATIONAL</span>

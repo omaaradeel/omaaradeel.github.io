@@ -11,8 +11,12 @@ import ScrollProgressHUD from "@/components/ScrollProgressHUD";
 import ContactSection from "@/components/ContactSection";
 import SplashScreen from "@/components/SplashScreen";
 
+import { useTheme } from "@/context/ThemeContext";
+import ThemeToggle from "@/components/ThemeToggle";
+
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { isDark } = useTheme();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -38,7 +42,12 @@ export default function Home() {
   const section2Opacity = useTransform(scrollYProgress, [0.32, 0.4, 0.5, 0.6], [0, 1, 1, 0], { clamp: true });
 
   return (
-    <div ref={containerRef} className="relative w-full h-[520vh] text-white bg-transparent">
+    <div
+      ref={containerRef}
+      className={`relative w-full h-[520vh] bg-transparent transition-colors duration-500 ${
+        isDark ? "text-white" : "text-black"
+      }`}
+    >
       {/* Dark Splash Loading Screen (Zero Blue Colors) */}
       <SplashScreen />
 
@@ -52,32 +61,44 @@ export default function Home() {
       <ScrollVideo />
 
       {/* Fixed Header Navigation */}
-      <nav className="fixed top-0 w-full z-50 p-6 sm:p-8 flex justify-between items-center pointer-events-none drop-shadow-lg text-white">
+      <nav
+        className={`fixed top-0 w-full z-50 p-6 sm:p-8 flex justify-between items-center pointer-events-none drop-shadow-lg transition-colors duration-300 ${
+          isDark ? "text-white" : "text-black"
+        }`}
+      >
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="font-space-grotesk text-xl sm:text-2xl font-bold tracking-tighter pointer-events-auto hover:text-red-400 transition-colors"
+          className="font-space-grotesk text-xl sm:text-2xl font-bold tracking-tighter pointer-events-auto hover:text-red-500 transition-colors"
         >
           <CipherText text="OMAR.ADEL" />
         </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="font-mono text-xs uppercase tracking-widest text-right pointer-events-auto text-white/90"
-        >
+
+        {/* Right Nav: Theme Switcher & Bouncing Badge */}
+        <div className="flex items-center gap-4 sm:gap-6 pointer-events-auto">
+          <ThemeToggle />
+
           <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{
-              duration: 1.6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.6 }}
+            className={`font-mono text-xs uppercase tracking-widest text-right ${
+              isDark ? "text-white/90" : "text-black/90"
+            }`}
           >
-            Software<br />Engineer
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{
+                duration: 1.6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              Software<br />Engineer
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </nav>
 
       {/* Chapter 01: Hero Section - Confined strictly to 0-120vh so it can never reappear at the end */}
@@ -91,7 +112,11 @@ export default function Home() {
               initial={{ y: 80, opacity: 0, filter: "blur(16px)", scale: 0.92 }}
               animate={{ y: 0, opacity: 1, filter: "blur(0px)", scale: 1 }}
               transition={{ duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
-              className="font-space-grotesk text-5xl sm:text-7xl md:text-[12rem] font-bold uppercase tracking-tighter text-center z-10 leading-[0.8] text-white [text-shadow:_0_0_60px_rgba(255,255,255,0.35),_0_20px_50px_rgba(0,0,0,0.8)]"
+              className={`font-space-grotesk text-5xl sm:text-7xl md:text-[12rem] font-bold uppercase tracking-tighter text-center z-10 leading-[0.8] transition-colors duration-300 ${
+                isDark
+                  ? "text-white [text-shadow:_0_0_60px_rgba(255,255,255,0.35),_0_20px_50px_rgba(0,0,0,0.8)]"
+                  : "text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
+              }`}
             >
               <CipherText text="OMAR ADEL" speed={55} revealSpeed={0.16} delay={1800} />
             </motion.h1>
@@ -99,7 +124,11 @@ export default function Home() {
               initial={{ y: 25, opacity: 0, letterSpacing: "0em" }}
               animate={{ y: 0, opacity: 1, letterSpacing: "0.2em" }}
               transition={{ duration: 2.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 text-lg sm:text-2xl md:text-4xl font-mono text-white/90 font-bold [text-shadow:_0_0_25px_rgba(255,255,255,0.2),_0_10px_20px_rgba(0,0,0,0.8)] text-center"
+              className={`mt-8 text-lg sm:text-2xl md:text-4xl font-mono font-bold text-center transition-colors duration-300 ${
+                isDark
+                  ? "text-white/90 [text-shadow:_0_0_25px_rgba(255,255,255,0.2),_0_10px_20px_rgba(0,0,0,0.8)]"
+                  : "text-black/80 [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]"
+              }`}
             >
               FULL STACK ENGINEER
             </motion.p>
@@ -121,10 +150,22 @@ export default function Home() {
             <span className="font-mono text-xs uppercase tracking-widest text-red-500 font-bold mb-3 block">
               /// 02 — ARCHITECTURE & VISION
             </span>
-            <h2 className="font-space-grotesk text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-[0.9] text-white [text-shadow:_0_0_40px_rgba(255,255,255,0.25),_0_20px_50px_rgba(0,0,0,0.9)]">
+            <h2
+              className={`font-space-grotesk text-4xl sm:text-6xl md:text-8xl font-bold mb-6 leading-[0.9] transition-colors duration-300 ${
+                isDark
+                  ? "text-white [text-shadow:_0_0_40px_rgba(255,255,255,0.25),_0_20px_50px_rgba(0,0,0,0.9)]"
+                  : "text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
+              }`}
+            >
               <CipherText text="ARCHITECTING" /> <br /> <CipherText text="THE FUTURE" />
             </h2>
-            <p className="text-xl sm:text-2xl md:text-4xl text-white/85 font-semibold max-w-lg leading-tight [text-shadow:_0_2px_15px_rgba(0,0,0,0.9)]">
+            <p
+              className={`text-xl sm:text-2xl md:text-4xl font-semibold max-w-lg leading-tight transition-colors duration-300 ${
+                isDark
+                  ? "text-white/85 [text-shadow:_0_2px_15px_rgba(0,0,0,0.9)]"
+                  : "text-black/90 [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]"
+              }`}
+            >
               Building scalable, high-performance web applications and immersive digital experiences.
             </p>
           </motion.div>
@@ -142,10 +183,22 @@ export default function Home() {
             <span className="font-mono text-xs uppercase tracking-widest text-red-500 font-bold mb-3 block">
               /// 03 — ENGINEERING & SYSTEMS
             </span>
-            <h2 className="font-space-grotesk text-4xl sm:text-6xl md:text-8xl font-bold mb-4 leading-[0.9] text-white [text-shadow:_0_0_40px_rgba(255,255,255,0.25),_0_20px_50px_rgba(0,0,0,0.9)]">
+            <h2
+              className={`font-space-grotesk text-4xl sm:text-6xl md:text-8xl font-bold mb-4 leading-[0.9] transition-colors duration-300 ${
+                isDark
+                  ? "text-white [text-shadow:_0_0_40px_rgba(255,255,255,0.25),_0_20px_50px_rgba(0,0,0,0.9)]"
+                  : "text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
+              }`}
+            >
               <CipherText text="ENGINEERING" /> <br /> <CipherText text="EXCELLENCE" />
             </h2>
-            <p className="text-xl sm:text-2xl md:text-3xl text-white/85 font-semibold max-w-lg leading-tight [text-shadow:_0_2px_15px_rgba(0,0,0,0.9)]">
+            <p
+              className={`text-xl sm:text-2xl md:text-3xl font-semibold max-w-lg leading-tight transition-colors duration-300 ${
+                isDark
+                  ? "text-white/85 [text-shadow:_0_2px_15px_rgba(0,0,0,0.9)]"
+                  : "text-black/90 [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]"
+              }`}
+            >
               Crafting resilient distributed backends and reactive, modern interfaces built for global scale.
             </p>
 

@@ -55,6 +55,7 @@ export const metadata: Metadata = {
 
 import SmoothScrollProvider from '@/components/SmoothScrollProvider';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 export default function RootLayout({
   children,
@@ -66,12 +67,14 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${spaceGrotesk.variable} font-sans bg-[#030712] text-slate-100 antialiased overflow-x-hidden selection:bg-red-500/30 selection:text-white`}
       >
-        <AnalyticsTracker />
-        <SmoothScrollProvider>
-          <main className="relative z-10 flex min-h-screen flex-col items-center">
-            {children}
-          </main>
-        </SmoothScrollProvider>
+        <ThemeProvider>
+          <AnalyticsTracker />
+          <SmoothScrollProvider>
+            <main className="relative z-10 flex min-h-screen flex-col items-center">
+              {children}
+            </main>
+          </SmoothScrollProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
