@@ -1,69 +1,142 @@
-import Image from "next/image";
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import ScrollVideo from "@/components/ScrollVideo";
+
+const GithubIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.02c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A4.8 4.8 0 0 0 9 18v4"></path>
+  </svg>
+);
+
+const XIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 4l16 16M4 20L20 4"></path>
+  </svg>
+);
+
+const DiscordIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 12h.01M15 12h.01M7.5 4.5A14.99 14.99 0 0 0 2.5 9s1 8.5 4.5 10.5c0 0 3-1.5 4.5-2.5h1c1.5 1 4.5 2.5 4.5 2.5 3.5-2 4.5-10.5 4.5-10.5a14.99 14.99 0 0 0-5-4.5"></path>
+    <path d="M7 4.5l-1.5-1.5M17 4.5l1.5-1.5"></path>
+  </svg>
+);
+
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Hero scale down on scroll
+  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.8]);
+  // Fade out much faster on scroll (vanishes immediately as you scroll down)
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  // Also physically slide it up out of the way just to be 100% sure!
+  const heroY = useTransform(scrollYProgress, [0, 0.15], ["0vh", "-100vh"]);
+
+  // Section 1: Reveal (Right side text) with 3D feel
+  const section1Y = useTransform(scrollYProgress, [0.1, 0.4], ["100%", "0%"]);
+  const section1Scale = useTransform(scrollYProgress, [0.1, 0.4], [0.8, 1]);
+  const section1Opacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
+  
+  // Section 2: Projects (Middle)
+  const projectsY = useTransform(scrollYProgress, [0.4, 0.8], ["100vh", "0vh"]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div ref={containerRef} className="relative w-full h-[300vh] text-black bg-transparent">
+      
+      <ScrollVideo />
+
+      <nav className="fixed top-0 w-full z-50 p-8 flex justify-between items-center pointer-events-none drop-shadow-md mix-blend-difference text-white">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="font-space-grotesk text-2xl font-bold tracking-tighter"
+        >
+          OMAR.ADEL
+        </motion.div>
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.6 }}
+          className="font-mono text-xs uppercase tracking-widest text-right"
+        >
+          Software<br/>Engineer
+        </motion.div>
+      </nav>
+
+      {/* Hero Section - MIDDLE */}
+      <motion.section 
+        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none"
+        style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}
+      >
+        <motion.h1 
+          initial={{ y: 100, opacity: 0, filter: "blur(20px)", scale: 0.9 }}
+          animate={{ y: 0, opacity: 1, filter: "blur(0px)", scale: 1 }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="font-space-grotesk text-7xl md:text-[12rem] font-bold uppercase tracking-tighter text-center z-10 leading-[0.8] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
+        >
+          OMAR ADEL
+        </motion.h1>
+        <motion.p
+          initial={{ y: 20, opacity: 0, letterSpacing: "0em" }}
+          animate={{ y: 0, opacity: 1, letterSpacing: "0.2em" }}
+          transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-8 text-2xl md:text-4xl font-mono text-black/80 font-bold [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]"
+        >
+          FULL STACK ENGINEER
+        </motion.p>
+      </motion.section>
+
+      {/* Sticky Split Section - RIGHT SIDE ONLY */}
+      <section className="absolute top-[100vh] w-full h-[100vh] pointer-events-none">
+        <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row">
+          
+          {/* Empty left side to show video */}
+          <div className="hidden md:block w-full md:w-1/2 h-full"></div>
+
+          {/* Text on right side */}
+          <motion.div 
+            className="w-full md:w-1/2 h-full flex flex-col justify-center p-12 text-right items-end"
+            style={{ y: section1Y, scale: section1Scale, opacity: section1Opacity }}
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <h2 className="font-space-grotesk text-6xl md:text-8xl font-bold mb-6 leading-[0.9] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]">
+              ARCHITECTING <br/> THE FUTURE
+            </h2>
+            <p className="text-2xl md:text-4xl text-black/90 font-bold max-w-lg leading-tight [text-shadow:_0_10px_20px_rgb(0_0_0_/_20%)]">
+              Building scalable, high-performance web applications and immersive digital experiences.
+            </p>
+          </motion.div>
+
         </div>
-      </main>
+      </section>
+
+      {/* Final Section - FOOTER */}
+      <section className="absolute bottom-0 w-full h-[30vh] pointer-events-none z-10">
+        <div 
+          className="w-full h-full bg-black flex flex-col items-center justify-center p-8 text-white"
+        >
+          <h2 className="font-space-grotesk text-3xl md:text-5xl font-bold mb-4 tracking-tighter">
+            INIT_CONTACT
+          </h2>
+          
+          <a href="mailto:info@omar-adel.me" className="text-xl md:text-2xl font-mono text-white border-b-2 border-white pb-1 mb-6 hover:text-white/60 transition-colors pointer-events-auto">
+            info@omar-adel.me
+          </a>
+
+          <div className="flex space-x-8 pointer-events-auto">
+            <a href="#" className="text-white hover:text-white/60 transition-colors"><XIcon /></a>
+            <a href="#" className="text-white hover:text-white/60 transition-colors"><GithubIcon /></a>
+            <a href="#" className="text-white hover:text-white/60 transition-colors"><DiscordIcon /></a>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
