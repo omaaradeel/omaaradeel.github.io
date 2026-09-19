@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
+import { useInView } from "framer-motion";
 
 interface CipherTextProps {
   text: string;
   className?: string;
-  triggerOnMount?: boolean;
   speed?: number;
   revealSpeed?: number;
+  delay?: number;
 }
 
 const GLYPHS = "01!@#$%^&*<>~+=Δ✦_XYZ01";
@@ -15,13 +16,16 @@ const GLYPHS = "01!@#$%^&*<>~+=Δ✦_XYZ01";
 export default function CipherText({
   text,
   className = "",
-  triggerOnMount = true,
-  speed = 45,
-  revealSpeed = 0.25,
+  speed = 40,
+  revealSpeed = 0.28,
+  delay = 100,
 }: CipherTextProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
   const [display, setDisplay] = useState(text);
   const isScramblingRef = useRef(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const hasTriggeredOnView = useRef(false);
 
   const scramble = useCallback(() => {
     if (isScramblingRef.current) return;
@@ -56,17 +60,26 @@ export default function CipherText({
     }, speed);
   }, [text, speed, revealSpeed]);
 
+  // Automatically trigger once when scrolled into view without needing hover
   useEffect(() => {
-    if (triggerOnMount) {
-      scramble();
+    if (isInView && !hasTriggeredOnView.current) {
+      hasTriggeredOnView.current = true;
+      const timer = setTimeout(() => {
+        scramble();
+      }, delay);
+      return () => clearTimeout(timer);
     }
+  }, [isInView, delay, scramble]);
+
+  useEffect(() => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [triggerOnMount, scramble]);
+  }, []);
 
   return (
     <span
+      ref={ref}
       onMouseEnter={scramble}
       data-interactive="true"
       className={`inline-block cursor-default select-none transition-colors duration-150 ${className}`}

@@ -93,7 +93,7 @@ export default function Home() {
               transition={{ duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
               className="font-space-grotesk text-5xl sm:text-7xl md:text-[12rem] font-bold uppercase tracking-tighter text-center z-10 leading-[0.8] text-black [text-shadow:_0_20px_50px_rgb(0_0_0_/_30%)]"
             >
-              <CipherText text="OMAR ADEL" speed={55} revealSpeed={0.16} />
+              <CipherText text="OMAR ADEL" speed={55} revealSpeed={0.16} delay={1800} />
             </motion.h1>
             <motion.p
               initial={{ y: 25, opacity: 0, letterSpacing: "0em" }}
