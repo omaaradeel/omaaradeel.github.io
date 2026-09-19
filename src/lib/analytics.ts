@@ -141,36 +141,81 @@ export async function fetchGeoIP() {
     console.warn("GeoIP primary fetch failed, trying fallback:", err);
   }
 
-  // Fallback to basic ipify
+  // 2. Secondary: freeipapi.com
+  try {
+    const res = await fetch("https://freeipapi.com/api/json", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.ipAddress) {
+        const payload = {
+          ip: data.ipAddress,
+          city: data.cityName || "Unknown",
+          region: data.regionName || "Unknown",
+          country: data.countryName || "Unknown",
+          countryCode: data.countryCode || "UN",
+          flag: "🌐",
+          isp: "Broadband Provider",
+          org: "ISP",
+          lat: data.latitude || 0,
+          lon: data.longitude || 0,
+        };
+        sessionStorage.setItem(GEO_CACHE_KEY, JSON.stringify(payload));
+        return payload;
+      }
+    }
+  } catch (err) {
+    console.warn("Secondary GeoIP failed:", err);
+  }
+
+  // 3. Tertiary: ipapi.co
+  try {
+    const res = await fetch("https://ipapi.co/json/", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.ip && !data.error) {
+        const payload = {
+          ip: data.ip,
+          city: data.city || "Unknown",
+          region: data.region || "Unknown",
+          country: data.country_name || "Unknown",
+          countryCode: data.country_code || "UN",
+          flag: "🌐",
+          isp: data.org || "Network",
+          org: data.org || "ISP",
+          lat: data.latitude || 0,
+          lon: data.longitude || 0,
+        };
+        sessionStorage.setItem(GEO_CACHE_KEY, JSON.stringify(payload));
+        return payload;
+      }
+    }
+  } catch (err) {
+    console.warn("Tertiary GeoIP failed:", err);
+  }
+
+  // 4. Basic IP fallback
   try {
     const res = await fetch("https://api.ipify.org?format=json");
     const json = await res.json();
-    return {
-      ip: json.ip,
-      city: "Unknown",
-      region: "Unknown",
-      country: "Global",
-      countryCode: "UN",
-      flag: "🌐",
-      isp: "ISP",
-      org: "Provider",
-      lat: 0,
-      lon: 0,
-    };
+    if (json.ip) {
+      return {
+        ip: json.ip,
+        city: "Location Protected",
+        region: "Unknown",
+        country: "Global",
+        countryCode: "UN",
+        flag: "🌐",
+        isp: "Network",
+        org: "ISP",
+        lat: 0,
+        lon: 0,
+      };
+    }
   } catch {
-    return {
-      ip: "197.55.246.77",
-      city: "Cairo",
-      region: "Cairo Governorate",
-      country: "Egypt",
-      countryCode: "EG",
-      flag: "🇪🇬",
-      isp: "Telecom Egypt",
-      org: "TE Data",
-      lat: 30.0444,
-      lon: 31.2357,
-    };
+    return null;
   }
+
+  return null;
 }
 
 export function getStoredSessions(): VisitorSession[] {
@@ -244,111 +289,4 @@ export function getCloudConfig(): CloudSyncConfig {
 export function saveCloudConfig(config: CloudSyncConfig): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify(config));
-}
-
-// Generate rich initial baseline data if user has no sessions yet
-export function getSampleTelemetry(): VisitorSession[] {
-  const now = Date.now();
-  return [
-    {
-      id: "sess_global_sf_1",
-      visitorId: "usr_94a8f1",
-      ip: "73.223.18.92",
-      city: "San Francisco",
-      region: "California",
-      country: "United States",
-      countryCode: "US",
-      flag: "🇺🇸",
-      isp: "Comcast Cable",
-      org: "Google Cloud",
-      lat: 37.7749,
-      lon: -122.4194,
-      browser: "Chrome",
-      os: "macOS",
-      deviceType: "desktop",
-      screen: "2560x1440",
-      referrer: "https://x.com/HiTMaNO__o",
-      firstVisit: now - 3600000 * 2,
-      lastActive: now - 1000 * 45,
-      durationSeconds: 312,
-      visitCount: 4,
-      path: "/",
-      isLive: true,
-    },
-    {
-      id: "sess_global_lon_2",
-      visitorId: "usr_b287cd",
-      ip: "82.165.197.10",
-      city: "London",
-      region: "Greater London",
-      country: "United Kingdom",
-      countryCode: "GB",
-      flag: "🇬🇧",
-      isp: "British Telecom",
-      org: "BT Internet",
-      lat: 51.5074,
-      lon: -0.1278,
-      browser: "Arc",
-      os: "macOS",
-      deviceType: "desktop",
-      screen: "1920x1080",
-      referrer: "https://github.com/OmarAdeel",
-      firstVisit: now - 3600000 * 5,
-      lastActive: now - 1000 * 180,
-      durationSeconds: 524,
-      visitCount: 7,
-      path: "/",
-      isLive: false,
-    },
-    {
-      id: "sess_global_dxb_3",
-      visitorId: "usr_e419aa",
-      ip: "94.200.122.5",
-      city: "Dubai",
-      region: "Dubai",
-      country: "United Arab Emirates",
-      countryCode: "AE",
-      flag: "🇦🇪",
-      isp: "du Telecom",
-      org: "Emirates Integrated Telecommunications",
-      lat: 25.2048,
-      lon: 55.2708,
-      browser: "Safari",
-      os: "iOS",
-      deviceType: "mobile",
-      screen: "390x844",
-      referrer: "https://t.me",
-      firstVisit: now - 3600000 * 12,
-      lastActive: now - 3600000 * 1,
-      durationSeconds: 198,
-      visitCount: 2,
-      path: "/",
-      isLive: false,
-    },
-    {
-      id: "sess_global_ber_4",
-      visitorId: "usr_f781bb",
-      ip: "194.156.98.22",
-      city: "Berlin",
-      region: "Berlin",
-      country: "Germany",
-      countryCode: "DE",
-      flag: "🇩🇪",
-      isp: "Deutsche Telekom",
-      org: "Hetzner Online",
-      lat: 52.52,
-      lon: 13.405,
-      browser: "Firefox",
-      os: "Linux",
-      deviceType: "desktop",
-      screen: "3840x2160",
-      referrer: "https://news.ycombinator.com",
-      firstVisit: now - 3600000 * 24,
-      lastActive: now - 3600000 * 4,
-      durationSeconds: 742,
-      visitCount: 11,
-      path: "/",
-      isLive: false,
-    },
-  ];
 }

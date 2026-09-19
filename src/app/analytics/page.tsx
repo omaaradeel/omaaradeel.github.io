@@ -7,7 +7,6 @@ import {
   saveSessions,
   formatDuration,
   formatRelativeTime,
-  getSampleTelemetry,
   getCloudConfig,
   saveCloudConfig,
   CloudSyncConfig,
@@ -26,15 +25,17 @@ export default function AnalyticsPage() {
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState(false);
 
-  // Load stored sessions or initial baseline
+  // Load stored sessions (purges any mock data from previous sessions)
   const refreshData = () => {
-    let stored = getStoredSessions();
-    if (stored.length === 0) {
-      // Seed with rich baseline telemetry so the dashboard is immediately operational
-      stored = getSampleTelemetry();
-      saveSessions(stored);
+    const stored = getStoredSessions();
+    // Exclude any mock/sample sessions (e.g. starting with sess_global_ or sess_manual_)
+    const realSessions = stored.filter(
+      (s) => !s.id.startsWith("sess_global_") && !s.id.startsWith("sess_manual_")
+    );
+    if (realSessions.length !== stored.length) {
+      saveSessions(realSessions);
     }
-    setSessions([...stored]);
+    setSessions([...realSessions]);
     setLastRefreshed(new Date());
   };
 
@@ -148,40 +149,6 @@ export default function AnalyticsPage() {
     }
   };
 
-  const handleInjectCurrentIP = async () => {
-    const geo = await fetchGeoIP();
-    if (geo) {
-      const manualSession: VisitorSession = {
-        id: `sess_manual_${Date.now()}`,
-        visitorId: `usr_manual_${Math.random().toString(36).substring(2, 7)}`,
-        ip: geo.ip,
-        city: geo.city,
-        region: geo.region,
-        country: geo.country,
-        countryCode: geo.countryCode,
-        flag: geo.flag,
-        isp: geo.isp,
-        org: geo.org,
-        lat: geo.lat,
-        lon: geo.lon,
-        browser: "Chrome",
-        os: "macOS",
-        deviceType: "desktop",
-        screen: "2560x1440",
-        referrer: "Manual Verification",
-        firstVisit: Date.now() - 120000,
-        lastActive: Date.now(),
-        durationSeconds: 124,
-        visitCount: 1,
-        path: "/",
-        isLive: true,
-      };
-      const updated = [manualSession, ...sessions];
-      saveSessions(updated);
-      setSessions(updated);
-    }
-  };
-
   const handleSaveCloudConfig = (e: React.FormEvent) => {
     e.preventDefault();
     saveCloudConfig(cloudConfig);
@@ -216,13 +183,6 @@ export default function AnalyticsPage() {
               <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
             </svg>
             <span>SYNC NOW</span>
-          </button>
-
-          <button
-            onClick={handleInjectCurrentIP}
-            className="px-3.5 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-mono transition-colors"
-          >
-            + LOG MY IP
           </button>
 
           <button
